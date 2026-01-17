@@ -10,7 +10,7 @@ export default function LenisProvider() {
       easing: (t) =>
         Math.min(1, 1.001 - Math.pow(2, -10 * t)), // natural ease
       smoothWheel: true,
-      smoothTouch: false,      // keep native on touch for UX
+      syncTouch: false,      // keep native on touch for UX
     });
 
     let rafId: number;
