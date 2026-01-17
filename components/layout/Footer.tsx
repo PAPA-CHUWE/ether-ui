@@ -67,14 +67,14 @@ const Footer = () => {
   };
 
   return (
-    <footer ref={rootRef} className="relative mt-10 md:mt-20 overflow-hidden">
+    <footer ref={rootRef} className="relative  overflow-hidden">
       {/* subtle ambient wash */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
         <div className="absolute -bottom-28 right-[-80px] h-80 w-80 rounded-full bg-foreground/10 blur-3xl" />
       </div>
 
-      <div className="mx-auto w-full max-w-6xl px-6 pb-10">
+      <div className="mx-auto w-full max-w-6xl px-6 pb-10 mt-10 md:mt-20">
         {/* Panel (like the 2nd inspiration: top links + bottom newsletter/social) */}
         <div className="glass relative overflow-hidden rounded-3xl border border-border/40">
           {/* shimmer line */}
