@@ -96,7 +96,7 @@ const Footer = () => {
                 <span className="text-base font-semibold tracking-wide">EtherUI</span>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-                A next-gen glass UI system for modern products. Clean, immersive, and fast.
+                A next-gen glass UI system for modern products. Clean, immersive, and fast UIs.
               </p>
 
               <div className="mt-4 flex items-center gap-3">

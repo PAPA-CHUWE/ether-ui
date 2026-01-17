@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Viga } from "next/font/google";
 import "./globals.css";
 import "aos/dist/aos.css";
 import AOSProvider from "@/components/layout/AOSProvider";
+import LenisProvider from "@/components/layout/LenisProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({
       >
         {children}
         <AOSProvider />
+        <LenisProvider />
       </body>
     </html>
   );
