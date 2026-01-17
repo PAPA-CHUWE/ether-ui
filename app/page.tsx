@@ -6,6 +6,7 @@ import Features from "./sections/features/page";
 import Pricing from "./sections/pricing/page";
 import BackToTopBtn from "@/components/layout/BackToTopBtn";
 import About from "./sections/about/page";
+import Contact from "./sections/contact/page";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
     <Features/>
     <Pricing/>
     <About/>
+    <Contact/>
     <Footer/>
     <BackToTopBtn/>
    </main>
