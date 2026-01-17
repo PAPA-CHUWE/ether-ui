@@ -40,7 +40,7 @@ const Hero = () => {
                     {/* SPLINE */}
                     <div className="relative pointer-events-none">
                         <div className="overflow-hidden p-2">
-                            <div className="h-[360px] w-full md:h-[450px] bg-transparent">
+                            <div className="h-[560px] w-full  bg-transparent">
                                 <Spline scene="https://prod.spline.design/H-8IROft27FLMs7b/scene.splinecode" />
                             </div>
                         </div>
