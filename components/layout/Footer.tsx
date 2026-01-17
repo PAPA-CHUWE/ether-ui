@@ -67,7 +67,7 @@ const Footer = () => {
   };
 
   return (
-    <footer ref={rootRef} className="relative mt-0 md:mt-20 overflow-hidden">
+    <footer ref={rootRef} className="relative mt-10 md:mt-20 overflow-hidden">
       {/* subtle ambient wash */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
