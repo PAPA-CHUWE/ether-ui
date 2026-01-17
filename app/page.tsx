@@ -4,6 +4,8 @@ import Topbar from "@/components/layout/Topbar";
 import Image from "next/image";
 import Features from "./sections/features/page";
 import Pricing from "./sections/pricing/page";
+import BackToTopBtn from "@/components/layout/BackToTopBtn";
+import About from "./sections/about/page";
 
 export default function Home() {
   return (
@@ -12,7 +14,9 @@ export default function Home() {
     <Hero/>
     <Features/>
     <Pricing/>
+    <About/>
     <Footer/>
+    <BackToTopBtn/>
    </main>
   );
 }
