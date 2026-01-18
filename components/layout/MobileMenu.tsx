@@ -2,14 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
-import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { scrollToHash } from "@/lib/scroll-to-hash";
 
 type NavItem = { name: string; href: string };
 
@@ -24,34 +19,51 @@ const MobileMenu = ({ open, onClose, navItems }: Props) => {
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
       <SheetContent
         side="top"
-        className="mx-4 mt-4 rounded-3xl  glass p-0 shadow-none w-full h-full"
+        className="  glass px-5 shadow-none w-full h-full"
       >
-        {/* Glass panel */}
-        <div className=" relative p-4">
-          {/* Header */}
+        <div className="relative p-4">
           <SheetHeader className="flex-row items-center justify-between space-y-0">
-            <SheetTitle className="text-base font-semibold">
-              EtherUI
-            </SheetTitle>
-
-      
+            <SheetTitle className="text-base font-semibold">EtherUI</SheetTitle>
           </SheetHeader>
 
-          {/* Navigation */}
           <nav className="mt-4 space-y-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={onClose}
-                className="block rounded-2xl border border-border/40 bg-card/40 px-4 py-3 text-sm text-foreground/85 backdrop-blur transition hover:bg-foreground/10 hover:text-foreground"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isHash = item.href.startsWith("#");
+
+              if (!isHash) {
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={onClose}
+                    className="block rounded-2xl border border-border/40 bg-card/40 px-4 py-3 text-sm text-foreground/85 backdrop-blur transition hover:bg-foreground/10 hover:text-foreground"
+                  >
+                    {item.name}
+                  </Link>
+                );
+              }
+
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onClose();
+                    // wait a tick so the sheet starts closing, then scroll
+                    requestAnimationFrame(() => {
+                      scrollToHash(item.href, { offset: 88 });
+                      history.pushState(null, "", item.href);
+                    });
+                  }}
+                  className="block rounded-2xl border border-border/40 bg-card/40 px-4 py-3 text-sm text-foreground/85 backdrop-blur transition hover:bg-foreground/10 hover:text-foreground cursor-pointer"
+                >
+                  {item.name}
+                </a>
+              );
+            })}
           </nav>
 
-          {/* CTA */}
           <Button
             onClick={onClose}
             className="mt-4 w-full rounded-2xl bg-foreground text-background hover:bg-foreground/90"
@@ -59,7 +71,6 @@ const MobileMenu = ({ open, onClose, navItems }: Props) => {
             Get Started
           </Button>
 
-          {/* Subtle inner glow */}
           <div
             className="pointer-events-none absolute -bottom-16 -right-16 h-44 w-44 rounded-full blur-3xl opacity-60"
             aria-hidden="true"

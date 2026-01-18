@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { MenuSquare } from "lucide-react";
 import MobileMenu from "./MobileMenu";
+import { scrollToHash } from "@/lib/scroll-to-hash";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -38,25 +39,44 @@ const Topbar = () => {
               : "glass"
           )}
         >
-          {/* Logo */}
           <Link href="/" className="text-lg font-semibold text-foreground">
             EtherUI
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm text-foreground/80 hover:text-foreground transition"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isHash = item.href.startsWith("#");
+
+              if (!isHash) {
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-sm text-foreground/80 hover:text-foreground transition"
+                  >
+                    {item.name}
+                  </Link>
+                );
+              }
+
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToHash(item.href, { offset: 88 });
+                    // optional: update URL hash without jump
+                    history.pushState(null, "", item.href);
+                  }}
+                  className="text-sm text-foreground/80 hover:text-foreground transition cursor-pointer"
+                >
+                  {item.name}
+                </a>
+              );
+            })}
           </nav>
 
-          {/* Right actions */}
           <div className="flex items-center gap-2">
             <Button className="glass text-foreground hover:bg-foreground/20 bg-secondary hidden md:inline-flex">
               Get Started
@@ -75,7 +95,6 @@ const Topbar = () => {
             </Button>
           </div>
 
-         
           <MobileMenu
             open={menuOpen}
             onClose={() => setMenuOpen(false)}
