@@ -1,9 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { scrollToHash } from "@/lib/scroll-to-hash";
 
 type NavItem = { name: string; href: string };
@@ -15,15 +20,31 @@ type Props = {
 };
 
 const MobileMenu = ({ open, onClose, navItems }: Props) => {
+  // ✅ Auto-close when screen is no longer small
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+
+    const handleChange = () => {
+      if (media.matches) {
+        onClose();
+      }
+    };
+
+    media.addEventListener("change", handleChange);
+    return () => media.removeEventListener("change", handleChange);
+  }, [onClose]);
+
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
       <SheetContent
         side="top"
-        className="  glass px-5 shadow-none w-full h-full"
+        className="glass px-5 shadow-none w-full h-full"
       >
         <div className="relative p-4">
           <SheetHeader className="flex-row items-center justify-between space-y-0">
-            <SheetTitle className="text-base font-semibold">EtherUI</SheetTitle>
+            <SheetTitle className="text-base font-semibold">
+              EtherUI
+            </SheetTitle>
           </SheetHeader>
 
           <nav className="mt-4 space-y-2">
@@ -50,7 +71,6 @@ const MobileMenu = ({ open, onClose, navItems }: Props) => {
                   onClick={(e) => {
                     e.preventDefault();
                     onClose();
-                    // wait a tick so the sheet starts closing, then scroll
                     requestAnimationFrame(() => {
                       scrollToHash(item.href, { offset: 88 });
                       history.pushState(null, "", item.href);
