@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { MenuSquare } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import { scrollToHash } from "@/lib/scroll-to-hash";
+import Image from "next/image";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -33,15 +34,20 @@ const Topbar = () => {
       <div className="mx-auto max-w-6xl px-6 pt-4">
         <div
           className={clsx(
-            "flex h-16 items-center justify-between px-6 rounded-2xl transition-all duration-300 ease-out",
+            "flex h-16 items-center justify-between px-2 rounded-2xl transition-all duration-300 ease-out",
             scrolled
               ? "bg-background/95 backdrop-blur-xl border border-border shadow-lg"
               : "glass"
           )}
         >
-          <Link href="/" className="text-lg font-semibold text-foreground">
+         <div>
+         <Link href="/" className="text-lg font-semibold text-foreground md:hidden block">
             EtherUI
           </Link>
+          <Link href="/" className="text-lg font-semibold text-foreground md:block hidden">
+            <Image src={'/logos/etherui.svg'} width={150} height={150} alt="Ether-Ui"/>
+          </Link>
+         </div>
 
           <nav className="hidden md:flex items-center gap-6">
             {navItems.map((item) => {
