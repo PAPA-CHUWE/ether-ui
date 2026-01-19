@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import gsap from "gsap";
+import Image from "next/image";
 
 const Footer = () => {
   const rootRef = useRef<HTMLElement | null>(null);
@@ -91,10 +92,18 @@ const Footer = () => {
           {/* Top row */}
           <div className="grid gap-8 p-6 sm:p-8 md:grid-cols-4">
             <div data-ft className="md:col-span-1">
-              <div className="flex items-center gap-2">
-                <span className="inline-block h-3 w-3 rounded-full bg-foreground/70" />
-                <span className="text-base font-semibold tracking-wide">EtherUI</span>
+              <div className="flex items-center justify-start gap-2 h-8">
+                <Link href="/" className="flex items-start">
+                  <Image
+                    src="/logos/etherui.svg"
+                    width={120}
+                    height={150}
+                    alt="EtherUI"
+                    className="block"
+                  />
+                </Link>
               </div>
+
               <p className="mt-3 text-sm leading-relaxed text-foreground/70">
                 A next-gen glass UI system for modern products. Clean, immersive, and fast UIs.
               </p>

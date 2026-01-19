@@ -45,7 +45,7 @@ const Topbar = () => {
             EtherUI
           </Link>
           <Link href="/" className="text-lg font-semibold text-foreground md:block hidden">
-            <Image src={'/logos/etherui.svg'} width={150} height={150} alt="Ether-Ui"/>
+            <Image src={'/logos/etherui.svg'} width={100} height={100} alt="Ether-Ui"/>
           </Link>
          </div>
 
