@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 
 const Hero = () => {
     return (
-        <section className="w-full md:mt-0 mt-14">
+        <section id="home" className="w-full md:mt-0 mt-14">
             <div className="mx-auto max-w-6xl px-6 pt-10">
                 <div className=" grid items-center gap-10 p-6 md:grid-cols-2 md:p-10">
                     {/* TEXT */}

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -9,6 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import clsx from "clsx";
 import { scrollToHash } from "@/lib/scroll-to-hash";
 
 type NavItem = { name: string; href: string };
@@ -20,26 +22,51 @@ type Props = {
 };
 
 const MobileMenu = ({ open, onClose, navItems }: Props) => {
+  const pathname = usePathname();
+  const [activeHash, setActiveHash] = useState("#home");
+
+  // ✅ Track hash changes
+  useEffect(() => {
+    const updateHash = () =>
+      setActiveHash(window.location.hash || "#home");
+
+    updateHash();
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  }, []);
+
   // ✅ Auto-close when screen is no longer small
   useEffect(() => {
     const media = window.matchMedia("(min-width: 768px)");
-
-    const handleChange = () => {
-      if (media.matches) {
-        onClose();
-      }
-    };
-
+    const handleChange = () => media.matches && onClose();
     media.addEventListener("change", handleChange);
     return () => media.removeEventListener("change", handleChange);
   }, [onClose]);
 
+  const handleHashNav = (hash: string) => {
+    onClose();
+
+    requestAnimationFrame(() => {
+      if (pathname !== "/") {
+        window.location.href = `/${hash}`;
+        return;
+      }
+
+      scrollToHash(hash, { offset: 88 });
+
+      if (hash === "#home") {
+        history.replaceState(null, "", hash);
+      } else {
+        history.pushState(null, "", hash);
+      }
+
+      setActiveHash(hash);
+    });
+  };
+
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
-      <SheetContent
-        side="top"
-        className="glass px-5 shadow-none w-full h-full"
-      >
+      <SheetContent side="top" className="glass px-5 shadow-none w-full h-full">
         <div className="relative p-4">
           <SheetHeader className="flex-row items-center justify-between space-y-0">
             <SheetTitle className="text-base font-semibold">
@@ -50,6 +77,15 @@ const MobileMenu = ({ open, onClose, navItems }: Props) => {
           <nav className="mt-4 space-y-2">
             {navItems.map((item) => {
               const isHash = item.href.startsWith("#");
+              const isActive =
+                isHash && activeHash === item.href && pathname === "/";
+
+              const itemClass = clsx(
+                "block rounded-2xl border px-4 py-3 text-sm backdrop-blur transition",
+                isActive
+                  ? "bg-foreground text-background border-foreground"
+                  : "bg-card/40 border-border/40 text-foreground/85 hover:bg-foreground/10 hover:text-foreground"
+              );
 
               if (!isHash) {
                 return (
@@ -57,7 +93,7 @@ const MobileMenu = ({ open, onClose, navItems }: Props) => {
                     key={item.name}
                     href={item.href}
                     onClick={onClose}
-                    className="block rounded-2xl border border-border/40 bg-card/40 px-4 py-3 text-sm text-foreground/85 backdrop-blur transition hover:bg-foreground/10 hover:text-foreground"
+                    className={itemClass}
                   >
                     {item.name}
                   </Link>
@@ -70,13 +106,9 @@ const MobileMenu = ({ open, onClose, navItems }: Props) => {
                   href={item.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    onClose();
-                    requestAnimationFrame(() => {
-                      scrollToHash(item.href, { offset: 88 });
-                      history.pushState(null, "", item.href);
-                    });
+                    handleHashNav(item.href);
                   }}
-                  className="block rounded-2xl border border-border/40 bg-card/40 px-4 py-3 text-sm text-foreground/85 backdrop-blur transition hover:bg-foreground/10 hover:text-foreground cursor-pointer"
+                  className={itemClass}
                 >
                   {item.name}
                 </a>
@@ -85,7 +117,7 @@ const MobileMenu = ({ open, onClose, navItems }: Props) => {
           </nav>
 
           <Button
-            onClick={onClose}
+            onClick={() => handleHashNav("#pricing")}
             className="mt-4 w-full rounded-2xl bg-foreground text-background hover:bg-foreground/90"
           >
             Get Started
