@@ -34,7 +34,7 @@ const Topbar = () => {
       <div className="mx-auto max-w-6xl px-6 pt-4">
         <div
           className={clsx(
-            "flex h-16 items-center justify-between px-2 rounded-2xl transition-all duration-300 ease-out",
+            "flex h-16 items-center justify-between px-4 rounded-2xl transition-all duration-300 ease-out",
             scrolled
               ? "bg-background/95 backdrop-blur-xl border border-border shadow-lg"
               : "glass"
