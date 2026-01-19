@@ -25,12 +25,12 @@ const Hero = () => {
                         </p>
 
                         <div className="flex flex-wrap gap-3">
-                            <Button className="glass text-[#000066] font-bold tracking-widest hover:bg-foreground/20 bg-secondary">
+                            <Button className="glass text-[#000066] font-bold tracking-widest hover:bg-foreground/20 bg-secondary max-w-36 w-full">
                                 Get Started
                             </Button>
                             <Button
                                 variant="outline"
-                                className="border-border bg-transparent text-foreground/85 hover:bg-foreground/10 hover:text-foreground"
+                                className="border-border bg-transparent text-foreground/85 hover:bg-foreground/10 hover:text-foreground max-w-36 w-full"
                             >
                                 View Components
                             </Button>
